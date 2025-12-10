@@ -34,6 +34,31 @@ export default function ProductSearch() {
     setFiltered(filteredProducts);
   }, [searchTerm, products]);
 
+  const [selectedIndex, setSelectedIndex] = useState(-1);
+
+  // Reset selected index when search changes
+  useEffect(() => {
+    setSelectedIndex(-1);
+  }, [searchTerm, filtered]);
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setSelectedIndex(prev => (prev < filtered.length - 1 ? prev + 1 : prev));
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setSelectedIndex(prev => (prev > 0 ? prev - 1 : prev));
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      if (selectedIndex >= 0 && selectedIndex < filtered.length) {
+        window.location.href = filtered[selectedIndex].url;
+      }
+    } else if (e.key === 'Escape') {
+      setSearchTerm('');
+      setSelectedIndex(-1);
+    }
+  };
+
   return (
     <div className="relative w-full max-w-xs">
       <input
@@ -41,6 +66,7 @@ export default function ProductSearch() {
         placeholder="Search products..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
+        onKeyDown={handleKeyDown}
         aria-label="Search products"
         className="input input-bordered w-full"
       />
@@ -54,8 +80,8 @@ export default function ProductSearch() {
             <li className="p-3 text-base-content/70 text-sm">No products found.</li>
           )}
 
-          {!error && filtered.map((product) => (
-            <li key={product.url} className="hover:bg-base-200 transition-colors">
+          {!error && filtered.map((product, index) => (
+            <li key={product.url} className={`transition-colors ${index === selectedIndex ? 'bg-base-200' : 'hover:bg-base-200'}`}>
               <a href={product.url} className="flex p-3 items-center space-x-3">
                 <img
                   src={product.poster}

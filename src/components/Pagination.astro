@@ -3,24 +3,36 @@ const { length, currentPage, firstUrl, prevUrl, nextUrl } = Astro.props;
 const paginationList = Array.from({ length }, (_, i) => i + 1);
 ---
 
-<nav class="justify-center flex my-12">
-  <div class="join">
-    {
-      prevUrl ? (
-        <a href={prevUrl} class="join-item dark:btn-outline btn">
-          Previous page{" "}
-        </a>
-      ) : null
-    }
-    <button class="dark:btn-outline join-item btn"
-      >{currentPage} / {length}</button
-    >
-    {
-      nextUrl ? (
-        <a href={nextUrl} class="join-item dark:btn-outline btn">
-          Next page
-        </a>
-      ) : null
-    }
-  </div>
+<nav class="flex justify-center items-center gap-8 my-6">
+  {
+    prevUrl ? (
+      <a href={prevUrl} class="group flex items-center gap-2 text-sm font-medium transition-colors hover:text-primary">
+        <span class="transition-transform group-hover:-translate-x-1">←</span>
+        Previous
+      </a>
+    ) : (
+      <span class="invisible flex items-center gap-2 text-sm font-medium">
+        <span>←</span>
+        Previous
+      </span>
+    )
+  }
+  
+  <span class="font-mono text-sm opacity-50">
+    {currentPage} / {length}
+  </span>
+
+  {
+    nextUrl ? (
+      <a href={nextUrl} class="group flex items-center gap-2 text-sm font-medium transition-colors hover:text-primary">
+        Next
+        <span class="transition-transform group-hover:translate-x-1">→</span>
+      </a>
+    ) : (
+      <span class="invisible flex items-center gap-2 text-sm font-medium">
+        Next
+        <span>→</span>
+      </span>
+    )
+  }
 </nav>
