@@ -1,0 +1,88 @@
+---
+import { type CollectionEntry, getCollection } from "astro:content";
+import { render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { TELEGRAM_LINK } from "../../consts";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("products");
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: post,
+  }));
+}
+
+type Props = CollectionEntry<"products">;
+
+const post = Astro.props;
+const { Content } = await render(post);
+
+const title = post.data.title + " - Buy Online";
+---
+
+<BaseLayout
+  title={title}
+  image={post.data.images[0]}
+  description={post.data.description}
+  time={post.data.created_at.toISOString()}
+>
+  <div class="container mx-auto p-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      {/* Left Column: Image Carousel */}
+      <div class="carousel w-full rounded-box shadow-lg">
+        {
+          post.data.images.map((image, index) => (
+            <div id={`slide${index + 1}`} class="carousel-item relative w-full">
+              <img src={image} class="w-full object-contain h-[400px] md:h-[600px]" />
+              <div class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+                <a href={`#slide${index === 0 ? post.data.images.length : index}`} class="btn btn-circle">❮</a> 
+                <a href={`#slide${index === post.data.images.length - 1 ? 1 : index + 2}`} class="btn btn-circle">❯</a>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+
+      {/* Right Column: Product Info */}
+      <div class="flex flex-col gap-4">
+        <h1 class="text-3xl font-bold">{post.data.title}</h1>
+        
+        <div class="text-2xl font-semibold text-primary">
+          {post.data.currency} {post.data.price}
+        </div>
+
+        <div class="prose max-w-none">
+          <p>{post.data.description}</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <a
+          href={TELEGRAM_LINK}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn btn-primary btn-lg w-full md:w-auto gap-2"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+          </svg>
+          Buy on Telegram
+        </a>
+
+        <div class="divider"></div>
+
+        <div class="prose max-w-none">
+          <Content />
+        </div>
+
+        {post.data.tags && post.data.tags.length > 0 && (
+          <div class="flex gap-2 mt-4">
+            {post.data.tags.map((tag) => (
+              <div class="badge badge-outline">{tag}</div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+</BaseLayout>

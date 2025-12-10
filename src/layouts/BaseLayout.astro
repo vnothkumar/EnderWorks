@@ -1,0 +1,54 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import { format } from "timeago.js";
+
+const { title, description, image, time } = Astro.props;
+---
+
+<html lang="en" prefix="og: https://ogp.me/ns#">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <BaseHead title={title} image={image} description={description} />
+  </head>
+  <body>
+    <Header />
+
+    {
+      title && (
+        <div class="hero py-10">
+          <div class="hero-content lg:text-center">
+            <div class="w-full grid gap-3">
+              <h1 class="text-2xl lg:text-3xl font-bold">{title}</h1>
+              {time && (
+                <>
+                  <time
+                    class="post-date mt-auto text-sm text-gray-500"
+                    datetime={time}
+                  >
+                    {format(time)}
+                  </time>
+                </>
+              )}
+
+              {description && (
+                <>
+                  <p>{description}</p>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+    <main class="w-full bg-base-100 min-h-screen max-h-full">
+      <slot />
+
+
+    </main>
+    <Footer />
+  </body>
+</html>

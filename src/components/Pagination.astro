@@ -1,0 +1,26 @@
+---
+const { length, currentPage, firstUrl, prevUrl, nextUrl } = Astro.props;
+const paginationList = Array.from({ length }, (_, i) => i + 1);
+---
+
+<nav class="justify-center flex my-12">
+  <div class="join">
+    {
+      prevUrl ? (
+        <a href={prevUrl} class="join-item dark:btn-outline btn">
+          Previous page{" "}
+        </a>
+      ) : null
+    }
+    <button class="dark:btn-outline join-item btn"
+      >{currentPage} / {length}</button
+    >
+    {
+      nextUrl ? (
+        <a href={nextUrl} class="join-item dark:btn-outline btn">
+          Next page
+        </a>
+      ) : null
+    }
+  </div>
+</nav>

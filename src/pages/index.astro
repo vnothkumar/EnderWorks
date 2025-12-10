@@ -1,0 +1,56 @@
+---
+import { getCollection } from "astro:content";
+import Pagination from "../components/Pagination.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Posts from "../components/Posts.astro";
+import { SITE_TITLE } from "../consts";
+
+const allPosts = await getCollection("products");
+
+const sorted = allPosts.sort(
+  (a, b) =>
+    new Date(b.data.created_at).valueOf() -
+    new Date(a.data.created_at).valueOf()
+);
+
+// Manually paginate for page 1
+const pageSize = 6;
+const page = {
+  data: sorted.slice(0, pageSize),
+  currentPage: 1,
+  lastPage: Math.ceil(sorted.length / pageSize),
+  url: {
+    current: "/",
+    prev: "/",
+    next: sorted.length > pageSize ? "/products/2" : "/",
+  },
+};
+---
+
+<BaseLayout description="Shop the best products on Enderworks." title="Enderworks - Best Products">
+
+
+  <Posts
+    posts={page.data.map((post) => ({
+      id: post.id,
+      slug: post.id,
+      data: {
+        title: post.data.title,
+        images: post.data.images,
+        description: post.data.description,
+        created_at: post.data.created_at,
+        price: post.data.price,
+      },
+    }))}
+  />
+
+  <Pagination
+    length={page.lastPage}
+    currentUrl={page.url.current}
+    currentPage={page.currentPage}
+    firstUrl="/"
+    prevUrl={page.url.prev}
+    nextUrl={page.url.next}
+    lastUrl={`/movies/${page.lastPage}`}
+  />
+</BaseLayout>

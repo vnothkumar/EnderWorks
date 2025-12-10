@@ -1,0 +1,37 @@
+---
+import { getCollection } from "astro:content";
+import Posts from "./Posts.astro";
+
+const allPosts = await getCollection("blog");
+
+const sortedPosts = allPosts.sort(
+  (a, b) =>
+    new Date(b.data.pubDate).valueOf() - new Date(a.data.pubDate).valueOf()
+);
+
+// Optional: Limit to first 4 or 6 posts for homepage preview
+const posts = sortedPosts.slice(0, 4);
+---
+
+<ul class="post-list">
+  {
+    posts.map((post) => (
+      <li class="post-item">
+        <a href={`/blog/${post.id}/`} class="post-link">
+          <h2 class="post-title">{post.data.title}</h2>
+          {post.data.description && (
+            <p class="post-desc">{post.data.description}</p>
+          )}
+         <time class="post-date" datetime={post.data.pubDate.toISOString()}>
+  {new Date(post.data.pubDate).toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric"
+  })}
+</time>
+
+        </a>
+      </li>
+    ))
+  }
+</ul>
