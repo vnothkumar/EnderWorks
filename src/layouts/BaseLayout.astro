@@ -18,14 +18,14 @@ const { title, description, image, time } = Astro.props;
 
     {
       title && (
-        <div class="hero py-10">
-          <div class="hero-content lg:text-center">
+        <div class="w-full py-10 px-4 bg-base-100 border-b border-base-200 mb-8">
+          <div class="w-full max-w-none">
             <div class="w-full grid gap-3">
-              <h1 class="text-2xl lg:text-3xl font-bold">{title}</h1>
+              <h1 class="text-3xl lg:text-5xl font-bold tracking-tight">{title}</h1>
               {time && (
                 <>
                   <time
-                    class="post-date mt-auto text-sm text-gray-500"
+                    class="post-date mt-auto text-sm text-base-content/60"
                     datetime={time}
                   >
                     {format(time)}
@@ -35,7 +35,7 @@ const { title, description, image, time } = Astro.props;
 
               {description && (
                 <>
-                  <p>{description}</p>
+                  <p class="text-lg text-base-content/80 max-w-3xl">{description}</p>
                 </>
               )}
             </div>
