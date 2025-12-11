@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 export default function ProductSearch() {
   const [products, setProducts] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [error, setError] = useState(null);
+  const searchRef = useRef(null);
 
   // Fetch products once on component mount
   useEffect(() => {
@@ -41,6 +42,19 @@ export default function ProductSearch() {
     setSelectedIndex(-1);
   }, [searchTerm, filtered]);
 
+  // Click outside to close
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (searchRef.current && !searchRef.current.contains(event.target)) {
+        setSearchTerm(''); // Or just clear filtered, but clearing term is safer for UI reset
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   const handleKeyDown = (e) => {
     if (e.key === 'ArrowDown') {
       e.preventDefault();
@@ -52,6 +66,9 @@ export default function ProductSearch() {
       e.preventDefault();
       if (selectedIndex >= 0 && selectedIndex < filtered.length) {
         window.location.href = filtered[selectedIndex].url;
+      } else if (filtered.length > 0) {
+        // Default to first result if none selected
+        window.location.href = filtered[0].url;
       }
     } else if (e.key === 'Escape') {
       setSearchTerm('');
@@ -60,7 +77,7 @@ export default function ProductSearch() {
   };
 
   return (
-    <div className="relative w-full max-w-xs">
+    <div className="relative w-full max-w-xs" ref={searchRef}>
       <input
         type="text"
         placeholder="Search products..."
@@ -73,7 +90,7 @@ export default function ProductSearch() {
 
       {/* Dropdown Results */}
       {searchTerm && (
-        <ul className="absolute z-50 mt-2 w-full bg-base-100 shadow-xl rounded-box overflow-hidden border border-base-300">
+        <ul className="absolute z-50 mt-2 w-full bg-base-100 shadow-xl rounded-box overflow-y-auto max-h-96 border border-base-300">
           {error && <li className="p-3 text-error text-sm">{error}</li>}
 
           {!error && filtered.length === 0 && (
