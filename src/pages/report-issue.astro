@@ -1,0 +1,30 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const title = "Report an Issue";
+const description = "Report an issue with Enderworks services";
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="prose max-w-none py-10 w-full px-4">
+    <h1>Report an Issue</h1>
+    <p>
+      We strive to provide the best experience possible. If you encounter any bugs, errors, or issues while using our website or products, please let us know.
+    </p>
+    <h2>How to Report</h2>
+    <p>
+      To report an issue, please email our support team at <a href="mailto:support@enderworks.com">support@enderworks.com</a>.
+    </p>
+    <p>
+      Please include the following information in your email to help us resolve the issue faster:
+    </p>
+    <ul>
+      <li>Calculated steps to reproduce the issue.</li>
+      <li>Screenshots or error messages, if applicable.</li>
+      <li>Your device and browser information.</li>
+    </ul>
+    <p>
+      Thank you for helping us improve Enderworks!
+    </p>
+  </div>
+</BaseLayout>
