@@ -26,7 +26,12 @@ const title = post.data.title + " - Buy Online";
   description={post.data.description}
   time={post.data.created_at.toISOString()}
 >
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+  <style>
+    :global(.hero) {
+      display: none !important;
+    }
+  </style>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
       {/* Left Column: Image Carousel */}
       <div id="product-carousel" class="carousel w-full rounded-box shadow-lg overflow-x-auto relative">
         {
@@ -94,12 +99,12 @@ const title = post.data.title + " - Buy Online";
       <div class="flex flex-col gap-4">
         <h1 class="text-3xl font-bold">{post.data.title}</h1>
         
-        <div class="text-2xl font-semibold text-primary">
-          {post.data.currency} {post.data.price}
-        </div>
-
         <div class="prose max-w-none">
           <p>{post.data.description}</p>
+        </div>
+
+        <div class="text-xl font-semibold bg-black text-white px-3 py-2 rounded-lg inline-flex justify-center items-center w-fit">
+          {post.data.currency}{post.data.price}
         </div>
 
         <div class="divider"></div>
