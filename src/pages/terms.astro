@@ -6,41 +6,28 @@ const description = "Terms of Use for Enderworks";
 ---
 
 <BaseLayout title={title} description={description}>
-  <style>
-    :global(.hero) {
-      display: none !important;
-    }
-  </style>
-
-  <div class="w-full py-10 px-4 bg-base-100 border-b border-base-200 mb-8">
-    <div class="w-full max-w-none">
-      <div class="w-full grid gap-3">
-        <h1 class="text-3xl lg:text-5xl font-bold tracking-tight">{title}</h1>
-        <p class="text-lg text-base-content/80 max-w-3xl">{description}</p>
-      </div>
+  <div class="w-full px-4 md:px-8 py-8">
+    <div class="mx-auto max-w-4xl prose prose-lg data-theme-light:prose-slate data-theme-dark:prose-invert">
+      <p>Last updated: {new Date().toLocaleDateString()}</p>
+      <p>
+        Please read these Terms of Use carefully before using the Enderworks website.
+      </p>
+      <h2>Acceptance of Terms</h2>
+      <p>
+        By accessing or using our service, you agree to be bound by these Terms. If you disagree with any part of the terms, then you may not access the service.
+      </p>
+      <h2>Purchases</h2>
+      <p>
+        If you wish to purchase any product or service made available through the Service, you may be asked to supply certain information relevant to your Purchase.
+      </p>
+      <h2>Changes</h2>
+      <p>
+        We reserve the right, at our sole discretion, to modify or replace these Terms at any time.
+      </p>
+      <h2>Contact Us</h2>
+      <p>
+        If you have any questions about these Terms, please contact us at <a href="mailto:support@enderworks.com">support@enderworks.com</a>.
+      </p>
     </div>
-  </div>
-
-  <div class="prose prose-lg max-w-none py-10 w-full px-4 data-theme-light:prose-slate data-theme-dark:prose-invert">
-    <p>Last updated: {new Date().toLocaleDateString()}</p>
-    <p>
-      Please read these Terms of Use carefully before using the Enderworks website.
-    </p>
-    <h2>Acceptance of Terms</h2>
-    <p>
-      By accessing or using our service, you agree to be bound by these Terms. If you disagree with any part of the terms, then you may not access the service.
-    </p>
-    <h2>Purchases</h2>
-    <p>
-      If you wish to purchase any product or service made available through the Service, you may be asked to supply certain information relevant to your Purchase.
-    </p>
-    <h2>Changes</h2>
-    <p>
-      We reserve the right, at our sole discretion, to modify or replace these Terms at any time.
-    </p>
-    <h2>Contact Us</h2>
-    <p>
-      If you have any questions about these Terms, please contact us at <a href="mailto:support@enderworks.com">support@enderworks.com</a>.
-    </p>
   </div>
 </BaseLayout>
