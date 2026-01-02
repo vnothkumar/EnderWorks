@@ -1,0 +1,52 @@
+---
+interface Props {
+  categories?: string[];
+  activeCategory?: string;
+}
+
+const defaultCategories = [
+  { name: "All", slug: "all", icon: "🎯" },
+  { name: "Rifles", slug: "rifle", icon: "🔫" },
+  { name: "Tactical", slug: "tactical", icon: "🎖️" },
+  { name: "Weapons", slug: "weapon", icon: "⚔️" },
+];
+
+const { categories = defaultCategories, activeCategory = "all" } = Astro.props;
+---
+
+<section class="w-full py-6 lg:py-8" id="products">
+  <div class="w-full px-4 lg:px-8">
+    <div class="flex flex-col gap-4">
+      <h2 class="text-xl lg:text-2xl font-bold tracking-tight">Browse Categories</h2>
+      <div class="flex overflow-x-auto pb-2 gap-2 lg:gap-3 scrollbar-hide">
+        {defaultCategories.map((cat) => (
+          <a
+            href={cat.slug === "all" ? "/" : `/tags/${cat.slug}`}
+            class:list={[
+              "category-pill flex-shrink-0 flex items-center gap-2 px-4 py-2.5 lg:px-5 lg:py-3 rounded-full font-medium text-sm lg:text-base transition-all duration-300 border-2",
+              activeCategory === cat.slug 
+                ? "bg-primary text-primary-content border-primary shadow-lg shadow-primary/25 scale-105" 
+                : "bg-base-200 text-base-content border-transparent hover:bg-base-300 hover:border-base-300 hover:scale-102"
+            ]}
+          >
+            <span class="text-lg">{cat.icon}</span>
+            <span>{cat.name}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .hover\:scale-102:hover {
+    transform: scale(1.02);
+  }
+</style>

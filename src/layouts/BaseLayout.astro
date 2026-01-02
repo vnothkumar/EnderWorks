@@ -13,14 +13,14 @@ const { title, description, image, time } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <BaseHead title={title} image={image} description={description} />
   </head>
-  <body>
+  <body class="min-h-screen flex flex-col">
     <Header />
 
     {
       title && (
-        <div class="hero py-10">
+        <div class="hero py-6 lg:py-8">
           <div class="hero-content lg:text-center">
-            <div class="w-full grid gap-3">
+            <div class="w-full grid gap-2">
               <h1 class="text-2xl lg:text-3xl font-bold">{title}</h1>
               {time && (
                 <>
@@ -35,7 +35,7 @@ const { title, description, image, time } = Astro.props;
 
               {description && (
                 <>
-                  <p>{description}</p>
+                  <p class="text-base-content/70">{description}</p>
                 </>
               )}
             </div>
@@ -44,9 +44,10 @@ const { title, description, image, time } = Astro.props;
       )
     }
 
-    <main class="w-full px-4 bg-base-100 min-h-screen max-h-full py-8">
+    <main class="w-full bg-base-100 flex-grow py-4">
       <slot />
     </main>
     <Footer />
   </body>
 </html>
+

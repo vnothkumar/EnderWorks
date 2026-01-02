@@ -27,9 +27,12 @@ const page = {
 };
 ---
 
-<BaseLayout description="Shop the best products on Enderworks." title="Enderworks - Best Products">
-
-
+<BaseLayout description="Shop the best products on Enderworks." title="">
+  <div class="w-full px-4 lg:px-8 py-6">
+    <h1 class="text-2xl lg:text-3xl font-bold tracking-tight mb-2">Latest Products</h1>
+    <p class="text-base-content/70">Browse our collection of premium tactical equipment</p>
+  </div>
+  
   <Posts
     posts={page.data.map((post) => ({
       id: post.id,
@@ -40,17 +43,21 @@ const page = {
         description: post.data.description,
         created_at: post.data.created_at,
         price: post.data.price,
+        tags: post.data.tags,
       },
     }))}
   />
 
-  <Pagination
-    length={page.lastPage}
-    currentUrl={page.url.current}
-    currentPage={page.currentPage}
-    firstUrl="/"
-    prevUrl={page.url.prev}
-    nextUrl={page.url.next}
-    lastUrl={`/movies/${page.lastPage}`}
-  />
+  <div class="py-8">
+    <Pagination
+      length={page.lastPage}
+      currentUrl={page.url.current}
+      currentPage={page.currentPage}
+      firstUrl="/"
+      prevUrl={page.url.prev}
+      nextUrl={page.url.next}
+      lastUrl={`/products/${page.lastPage}`}
+    />
+  </div>
 </BaseLayout>
+
