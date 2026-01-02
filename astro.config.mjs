@@ -13,7 +13,7 @@ import react from '@astrojs/react';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'enderworks.in',
+  site: 'example.com',
   integrations: [mdx(), sitemap(), robotsTxt(), react()],
   adapter: cloudflare(),
 
