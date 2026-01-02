@@ -113,13 +113,21 @@ const categories = [
 
 <script>
   // Close dropdown when clicking outside
-  document.addEventListener('click', (e) => {
+  document.addEventListener('mousedown', (e) => {
     const details = document.querySelectorAll('details.dropdown');
     details.forEach((detail) => {
+      const summary = detail.querySelector('summary');
+      // If click is not on the details element or its children, close it
       if (!detail.contains(e.target)) {
         detail.removeAttribute('open');
       }
     });
   });
+  
+  // Prevent dropdown from closing when clicking inside
+  document.querySelectorAll('details.dropdown').forEach((detail) => {
+    detail.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+  });
 </script>
-
