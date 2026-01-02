@@ -13,12 +13,12 @@ import react from '@astrojs/react';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://example.com',
+  site: 'enderworks.in',
   integrations: [mdx(), sitemap(), robotsTxt(), react()],
   adapter: cloudflare(),
 
   vite: {
-        plugins: [tailwindcss()],
+    plugins: [tailwindcss()],
     resolve: {
       // @ts-ignore
       alias: import.meta.env.PROD && {
